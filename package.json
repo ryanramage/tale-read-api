@@ -1,0 +1,31 @@
+{
+  "name": "tale-read-api",
+  "version": "0.0.0",
+  "description": "Methods to help you read and decrypt a published tale",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tape tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanramage/tale-read-api"
+  },
+  "keywords": [
+    "tale"
+  ],
+  "author": "Ryan Ramage",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanramage/tale-read-api/issues"
+  },
+  "homepage": "https://github.com/ryanramage/tale-read-api",
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "oboe": "^1.15.1",
+    "sjcl": "^1.0.1",
+    "xxtea-xmlhttprequest": "0.0.1"
+  },
+  "devDependencies": {
+    "tape": "^2.13.3"
+  }
+}
