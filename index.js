@@ -41,6 +41,7 @@ module.exports = function(base_url) {
 	      try {
 	        var c2 = JSON.parse( sjcl.decrypt(pass, JSON.stringify(key_ct)));
 	        oboe(self.resolve('node/' + c2.to))
+            .fail(function(err){ return cb(err) })
 		        .done(function(chapter_ct){
 		          var chapter = JSON.parse( sjcl.decrypt(c2.key, JSON.stringify(chapter_ct)));
 		          chapter.id = c2.to;
