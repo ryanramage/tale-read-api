@@ -1,6 +1,6 @@
 {
   "name": "tale-read-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Methods to help you read and decrypt a published tale",
   "main": "index.js",
   "scripts": {

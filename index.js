@@ -14,38 +14,37 @@ module.exports = function(base_url) {
   }
 
   api.package_details = function(cb){
-		oboe(this.resolve('package.json'))
-			.done(function(pkg){  cb(null, pkg) })
+		oboe(api.resolve('package.json'))
+			.done(function(pkg){ cb(null, pkg) })
 			.fail(function(err){ cb(err); })
   }
 
-  api.first_chapter = function(cb) {
-  	var self = this;
+  api.first_node = function(cb) {
 
-  	this.package_details(function(err, pkg){
+    api.package_details(function(err, pkg){
   		if (err) return cb(err);
-      oboe(self.resolve('node/' + pkg.start_id))
-      	.fail(function(err){ return cb(err) })
+      oboe(api.resolve('node/' + pkg.start_id))
+
       	.done(function(start_chapter){
       		cb(null, start_chapter);
 	      })
+        .fail(function(err){ return cb(err) })
   	})
   }
 
-  api.crack_chapter = function(key_id, pass, cb) {
-  	var self = this;
+  api.crack_node = function(key_id, pass, cb) {
 
-    oboe(self.resolve('key/' + key_id))
+    oboe(api.resolve('key/' + key_id))
       .fail(function(err){ return cb(err) })
     	.done(function(key_ct){
 	      try {
 	        var c2 = JSON.parse( sjcl.decrypt(pass, JSON.stringify(key_ct)));
-	        oboe(self.resolve('node/' + c2.to))
+	        oboe(api.resolve('node/' + c2.to))
             .fail(function(err){ return cb(err) })
-		        .done(function(chapter_ct){
-		          var chapter = JSON.parse( sjcl.decrypt(c2.key, JSON.stringify(chapter_ct)));
-		          chapter.id = c2.to;
-		          return cb(null, {key: c2.key, chapter: chapter});
+		        .done(function(node_ct){
+		          var node = JSON.parse( sjcl.decrypt(c2.key, JSON.stringify(node_ct)));
+		          node.id = c2.to;
+		          return cb(null, {key: c2.key, node: node});
 		        })
 	      } catch(e) {
 	        return cb(e);
@@ -53,11 +52,21 @@ module.exports = function(base_url) {
 	    })
   }
 
-  api.blob = function(chapter, filename, key, cb) {
-  	var self = this,
-				file = _.find(chapter.files, function(file){ return file.name === filename })
+  api.read_node = function(node_id, key, cb) {
+    oboe(api.resolve('node/' + node_id))
+      .fail(function(err){ return cb(err) })
+      .done(function(node_ct){
+          var node = JSON.parse( sjcl.decrypt(key, JSON.stringify(node_ct)) );
+          node.id = node_id;
+          cb(null, node);
+      })
+  }
 
-    xxtea(self.resolve('file/' + file.id), key, false, function(err, bytes){
+
+  api.blob = function(chapter, filename, key, cb) {
+    var file = _.find(chapter.files, function(file){ return file.name === filename })
+
+    xxtea(api.resolve('file/' + file.id), key, false, function(err, bytes){
       var blob = new Blob([bytes], {type: file.content_type});
       cb(null, blob);
     })
