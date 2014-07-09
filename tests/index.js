@@ -11,7 +11,7 @@ test('read package details', function(t){
 
 test('read first chapter', function(t){
 	t.plan(2);
-	read.first_chapter(function(err, chapter){
+	read.first_node(function(err, chapter){
 		t.error(err);
 		t.equals(chapter.type, 'markdown');		
 	})
@@ -19,17 +19,17 @@ test('read first chapter', function(t){
 
 test('crack chapter', function(t){
 	t.plan(4);
-	read.crack_chapter('65c283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '894', function(err, resp){
+	read.crack_node('65c283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '894', function(err, resp){
 		t.error(err);
 		t.equals(resp.key, 'iSSkNbKvWUm6pEDjUIEQwg==')
-		t.equals(resp.chapter.name, 'chapter2');
-		t.equals(resp.chapter.proof, '56e25f46-fae9-472d-98b0-68abeb753a49')
+		t.equals(resp.node.name, 'chapter2');
+		t.equals(resp.node.proof, '56e25f46-fae9-472d-98b0-68abeb753a49')
 	})
 })
 
 test('crack chapter, bad password', function(t){
 	t.plan(2);
-	read.crack_chapter('65c283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '895', function(err, resp){
+	read.crack_node('65c283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '895', function(err, resp){
 		t.ok(err);
 		t.error(resp);
 	})
@@ -37,7 +37,7 @@ test('crack chapter, bad password', function(t){
 
 test('invalid chapter', function(t){
 	t.plan(2);
-	read.crack_chapter('fff283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '895', function(err, resp){
+	read.crack_node('fff283d9-e6ac-4f27-9ef3-755bf8cf9d6e', '895', function(err, resp){
 		t.ok(err);
 		t.error(resp);
 	})	

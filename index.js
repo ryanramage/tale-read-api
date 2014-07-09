@@ -64,9 +64,11 @@ module.exports = function(base_url) {
 
 
   api.blob = function(chapter, filename, key, cb) {
+    if (typeof Blob === 'undefined') return cb('No blob support');
+
     var file = _.find(chapter.files, function(file){ return file.name === filename })
 
-    xxtea(api.resolve('file/' + file.id), key, false, function(err, bytes){
+    xxtea(api.resolve('file/' + file.id), key, {}, function(err, bytes){
       var blob = new Blob([bytes], {type: file.content_type});
       cb(null, blob);
     })

@@ -1,6 +1,6 @@
 {
   "name": "tale-read-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Methods to help you read and decrypt a published tale",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "lodash": "^2.4.1",
     "oboe": "^1.15.1",
     "sjcl": "^1.0.1",
-    "xxtea-xmlhttprequest": "0.0.1"
+    "xxtea-xmlhttprequest": "1.0.0"
   },
   "devDependencies": {
     "tape": "^2.13.3"
