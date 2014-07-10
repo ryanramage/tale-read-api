@@ -3,6 +3,7 @@ var url = require('url'),
 		_ = require('lodash'),
 		oboe = require('oboe'),
     sjcl  = require('sjcl'),
+    xhr = require('binary-xhr'),    
     xxtea = require('xxtea-xmlhttprequest');
 
 module.exports = function(base_url) {
@@ -62,17 +63,11 @@ module.exports = function(base_url) {
       })
   }
 
-
-  api.blob = function(chapter, filename, key, cb) {
-    if (typeof Blob === 'undefined') return cb('No blob support');
-
-    var file = _.find(chapter.files, function(file){ return file.name === filename })
-
-    xxtea(api.resolve('file/' + file.id), key, {}, function(err, bytes){
-      var blob = new Blob([bytes], {type: file.content_type});
-      cb(null, blob);
-    })
+  api.find = function(chapter, filename) {
+    if (filename.id) return filename;
+    return _.find(chapter.files, function(file){ return file.name === filename });
   }
+
 
   return api;
 

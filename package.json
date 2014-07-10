@@ -1,8 +1,9 @@
 {
   "name": "tale-read-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Methods to help you read and decrypt a published tale",
-  "main": "index.js",
+  "main": "node.js",
+  "browser": "./browser.js",
   "scripts": {
     "test": "./node_modules/.bin/tape tests/*.js"
   },
@@ -20,10 +21,12 @@
   },
   "homepage": "https://github.com/ryanramage/tale-read-api",
   "dependencies": {
+    "binary-xhr": "0.0.2",
     "lodash": "^2.4.1",
     "oboe": "^1.15.1",
+    "request": "^2.37.0",
     "sjcl": "^1.0.1",
-    "xxtea-xmlhttprequest": "1.0.0"
+    "xxtea-xmlhttprequest": "^1.0.0"
   },
   "devDependencies": {
     "tape": "^2.13.3"
